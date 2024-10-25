@@ -1,5 +1,5 @@
 setwd("/Volumes/OneTouch5GB 1/PolarBearWholeGenomes/JGIRR00/")
-dropbox_dir<-file.path("/Users/ruthrivkin/Library/CloudStorage/Dropbox/Postdoc_2021-2024/Polar_Bears/WholeGenomes/") #set directory for saving in dropbox 
+dropbox_dir<-file.path("~/Dropbox/Postdoc_2021-2024/Polar_Bears/WholeGenomes/") #set directory for saving in dropbox 
 
 library(ggplot2)
 
@@ -41,7 +41,8 @@ genoin <- "PB_24.08.16_ld_HWE.geno"
 geno <- read.geno("PB_24.08.16_ld_HWE.geno")
 
 obj.snmf = snmf(genoin, K = 1:10, ploidy = 2, entropy = T,
-                alpha = 100, rep = 1, project = "new", seed = 42)
+                alpha = 100, rep = 10, project = "new", seed = 42)
+
 obj.snmf=load.snmfProject("PB_24.05.28_ldpruned.snmfProject")
 
 summary(obj.snmf)
@@ -67,12 +68,12 @@ ggsave(file.path(dropbox_dir, "Figures/Cross-entropy.pdf"), width = 6.78, height
 
 
 #plot ancestry matrix
-ce = cross.entropy(obj.snmf, K = 4)
+ce = cross.entropy(obj.snmf, K = 3)
 ce
 lowest.ce = which.min(ce)
 lowest.ce
 
-qmatrix = as.data.frame(Q(obj.snmf, K = 4, run = lowest.ce))
+qmatrix = as.data.frame(Q(obj.snmf, K = 3, run = lowest.ce))
 head(qmatrix)
 
 my.colors = colorRampPalette(c("#5E85B8","#EDF0C0","#C13127"))
@@ -80,7 +81,7 @@ my.colors = colorRampPalette(c("#5E85B8","#EDF0C0","#C13127"))
 cols = my.colors(4)
 
 pdf(file.path(dropbox_dir,"Figures/IndividualsAncestry.pdf"),  width = 6.78, height = 5.3)
-barchart(obj.snmf, K = 4, run = lowest.ce,
+barchart(obj.snmf, K = 3, run = lowest.ce,
          border = NA, space = 0,
          col = cols,
          xlab = "Individuals",
