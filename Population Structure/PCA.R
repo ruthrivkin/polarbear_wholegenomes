@@ -5,19 +5,30 @@ library(ggplot2)
 library(tidyverse)
 
 my.colors = colorRampPalette(c("#5E85B8","#EDF0C0","#C13127"))
+c10 <- c(
+  "dodgerblue2", "maroon", # red
+  "green4",
+  "#6A3D9A", # purple
+  "#FF7F00", # orange
+  "gold1",
+  "skyblue2", "#FB9A99", # lt pink
+  "palegreen2",
+  "#CAB2D6")# lt purple
 
 ng <- theme(aspect.ratio=0.7,panel.background = element_blank(), 
             panel.grid.major = element_blank(), 
             panel.grid.minor = element_blank(),
-            panel.border=element_rect(fill = NA, color = "NA"),
-            axis.line = element_line(linewidth = 0.5), 
+            axis.line = element_line(linewidth=0.5), 
             axis.ticks=element_line(color="black"),
-            axis.text=element_text(color="black",size=10, margin = 0.5), 
+            axis.text=element_text(color="black",size=12, margin = 0.5), 
             axis.title=element_text(color="black",size=1), 
-            axis.title.y=element_text(vjust=1,size=12),
-            axis.title.x=element_text(vjust=0.1,size=12),
-            axis.text.x=element_text(size=10),
-            axis.text.y=element_text(size=10))
+            axis.title.y=element_text(vjust=1,size=14),
+            axis.title.x=element_text(vjust=0.1,size=14),
+            axis.text.x=element_text(size=12),
+            axis.text.y=element_text(size=12),
+            # legend.position = "top", legend.direction="horizontal", 
+            legend.text=element_text(size=10), 
+            legend.title = element_text(size=12))
 
 #Generate pca files for pca
 
@@ -48,7 +59,7 @@ cols = my.colors(length(unique(pca$Subpop)))
     geom_vline(xintercept = 0, linetype="dotted") +
     labs(x = paste0("Principal component 1 (",eigenval[1]," %)"),
          y = paste0("Principal component 3 (",eigenval[2]," %)")) + 
-    scale_color_manual(values = cols) +
+    scale_color_manual(values = c10) +
     ng
 )
 ggsave(file.path(dropbox_dir, "Figures/PCA_plink.pdf"), width = 6.78, height = 5.3, dpi = 300)
@@ -62,7 +73,7 @@ ggsave(file.path(dropbox_dir, "Figures/PCA_plink.pdf"), width = 6.78, height = 5
     geom_vline(xintercept = 0, linetype="dotted") +
     labs(x = paste0("Principal component 1 (",eigenval[1]," %)"),
          y = paste0("Principal component 2 (",eigenval[2]," %)")) + 
-    scale_color_manual(values = cols) +
+    scale_color_manual(values = c10) +
     ng
 )
 
